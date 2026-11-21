@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172554">
+  <title>SmartStudy — Learn smarter. Achieve more.</title>
+  <style>
+    :root { --navy:#172554; --blue:#3156d9; --sky:#eaf1ff; --ink:#172033; --muted:#64748b; --line:#e5eaf3; --bg:#f7f9fd; --white:#fff; --green:#147d55; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink); background:var(--bg); line-height:1.5; }
+    a { color:inherit; text-decoration:none; }
+    button, input, textarea { font:inherit; }
+    .wrap { width:min(1100px, calc(100% - 36px)); margin:auto; }
+    header { background:var(--white); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+    .nav { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.15rem; color:var(--navy); }
+    .logo { width:38px; height:38px; display:grid; place-items:center; border-radius:12px; background:var(--navy); color:white; font-size:21px; }
+    nav { display:flex; gap:22px; color:#4c5870; font-size:.94rem; }
+    nav a:hover { color:var(--blue); }
+    .btn { border:0; border-radius:12px; padding:12px 18px; background:var(--blue); color:white; font-weight:700; cursor:pointer; display:inline-flex; justify-content:center; align-items:center; gap:8px; }
+    .btn:hover { filter:brightness(.95); }
+    .btn.secondary { background:white; color:var(--navy); border:1px solid var(--line); }
+    .hero { padding:76px 0 62px; background:linear-gradient(135deg,#eef3ff 0%,#f8faff 58%,#effaf7 100%); }
+    .hero-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:44px; align-items:center; }
+    .eyebrow { color:var(--blue); font-size:.78rem; letter-spacing:.12em; font-weight:800; text-transform:uppercase; }
+    h1 { color:var(--navy); font-size:clamp(2.5rem,6vw,4.5rem); letter-spacing:-.055em; line-height:1.03; margin:15px 0 18px; }
+    .hero p { color:#536078; font-size:1.12rem; max-width:560px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+    .hero-card { background:white; padding:24px; border:1px solid #e2e9f7; border-radius:24px; box-shadow:0 20px 60px #233b7020; }
+    .mini-top { display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:.85rem; }
+    .progress { height:9px; background:#edf1f8; border-radius:20px; overflow:hidden; margin:10px 0 18px; }
+    .progress span { display:block; height:100%; width:68%; background:linear-gradient(90deg,#3156d9,#7b91f3); border-radius:20px; }
+    .lesson { display:flex; align-items:center; gap:13px; padding:13px 0; border-top:1px solid var(--line); }
+    .lesson-icon { width:43px; height:43px; display:grid; place-items:center; border-radius:13px; background:var(--sky); font-size:21px; }
+    .lesson small { display:block; color:var(--muted); }
+    section { padding:66px 0; }
+    .section-head { text-align:center; max-width:650px; margin:0 auto 32px; }
+    h2 { font-size:clamp(1.8rem,4vw,2.5rem); color:var(--navy); letter-spacing:-.035em; margin:8px 0 10px; }
+    .section-head p { color:var(--muted); margin:0; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .card { background:white; border:1px solid var(--line); border-radius:18px; padding:22px; }
+    .card .symbol { font-size:27px; }
+    .card h3 { margin:12px 0 5px; color:var(--navy); }
+    .card p { color:var(--muted); margin:0; font-size:.95rem; }
+    .tutor { background:var(--navy); color:white; border-radius:24px; padding:30px; display:grid; grid-template-columns:.8fr 1.2fr; gap:28px; align-items:center; }
+    .tutor h2 { color:white; }
+    .tutor p { color:#d5def7; }
+    .demo { background:white; color:var(--ink); padding:18px; border-radius:16px; }
+    label { display:block; font-weight:700; font-size:.9rem; margin-bottom:8px; }
+    textarea { width:100%; min-height:86px; resize:vertical; border:1px solid var(--line); border-radius:11px; padding:12px; outline-color:var(--blue); }
+    .answer { display:none; margin-top:14px; padding:14px; background:#f0f5ff; border-radius:12px; color:#27375f; }
+    .answer.show { display:block; }
+    .quiz { max-width:650px; margin:auto; background:white; border:1px solid var(--line); border-radius:18px; padding:24px; }
+    .quiz button.option { display:block; width:100%; text-align:left; padding:12px 14px; margin-top:10px; background:white; border:1px solid var(--line); border-radius:11px; cursor:pointer; }
+    .quiz button.option:hover { border-color:var(--blue); background:#f7f9ff; }
+    #quiz-result { margin-top:14px; font-weight:700; }
+    .notice { background:#fff8e7; border:1px solid #f4dfaa; color:#72551a; padding:13px 15px; border-radius:12px; font-size:.88rem; margin-top:22px; }
+    footer { background:#101c40; color:#dce5ff; padding:30px 0; }
+    footer .foot { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+    footer small { color:#aebcde; }
+    @media (max-width:760px) {
+      nav { display:none; }
+      .hero { padding:52px 0 42px; }
+      .hero-grid,.tutor { grid-template-columns:1fr; }
+      .cards { grid-template-columns:1fr; }
+      section { padding:48px 0; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#home"><span class="logo">✦</span> SmartStudy</a>
+    <nav aria-label="Main navigation">
+      <a href="#subjects">Subjects</a><a href="#tutor">AI Tutor demo</a><a href="#practice">Practice</a>
+    </nav>
+    <a class="btn" href="#tutor">Try the demo</a>
+  </div>
+</header>
+
+<main id="home">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Your learning companion</div>
+        <h1>Learn smarter.<br>Achieve more.</h1>
+        <p>Clear explanations, helpful practice and confidence-building study tools — all in one place.</p>
+        <div class="actions">
+          <a class="btn" href="#tutor">Explore the tutor <span aria-hidden="true">→</span></a>
+          <a class="btn secondary" href="#subjects">Explore subjects</a>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="Example learning dashboard">
+        <div class="mini-top"><strong>This week's learning</strong><span>✨ Great start</span></div>
+        <h3 style="margin:12px 0 2px;color:#172554">You're building momentum</h3>
+        <p style="margin:0;color:#64748b;font-size:.9rem">A little practice adds up.</p>
+        <div class="progress"><span></span></div>
+        <div class="lesson"><div class="lesson-icon">➗</div><div><strong>Fractions</strong><small>Mathematics · Learning topic</small></div></div>
+        <div class="lesson"><div class="lesson-icon">📖</div><div><strong>Reading skills</strong><small>English · Practice topic</small></div></div>
+        <div class="lesson"><div class="lesson-icon">🔬</div><div><strong>Living things</strong><small>Science · Explore topic</small></div></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="subjects">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">Explore and understand</div><h2>One place for your school subjects</h2><p>Start with a topic, learn at your own pace and build understanding step by step.</p></div>
+      <div class="cards">
+        <article class="card"><div class="symbol">➗</div><h3>Mathematics</h3><p>Break down tricky problems, practise skills and understand the steps.</p></article>
+        <article class="card"><div class="symbol">📚</div><h3>English</h3><p>Build reading, writing, vocabulary and grammar skills.</p></article>
+        <article class="card"><div class="symbol">🔬</div><h3>Science</h3><p>Explore big ideas, from living things to forces and space.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="tutor" style="padding-top:0">
+    <div class="wrap">
+      <div class="tutor">
+        <div><div class="eyebrow" style="color:#a9bcff">Try a sample interaction</div><h2>Meet your study buddy.</h2><p>Type a topic below to see an example of how SmartStudy could explain a concept.</p></div>
+        <div class="demo">
+          <label for="question">What would you like help understanding?</label>
+          <textarea id="question" placeholder="Example: What is probability?"></textarea>
+          <button class="btn" style="margin-top:10px" id="ask">Show sample explanation</button>
+          <div class="answer" id="answer" role="status" aria-live="polite"></div>
+          <p style="font-size:.78rem;color:#64748b;margin:12px 0 0">Prototype demo: this sample is not connected to a live AI model yet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">Quick practice</div><h2>Check what you know</h2><p>Try this sample question. You can have another go if you need to.</p></div>
+      <div class="quiz">
+        <strong>Mathematics · Fractions</strong>
+        <p>Which fraction is equal to one half?</p>
+        <button class="option" data-correct="false">A. 2/3</button>
+        <button class="option" data-correct="true">B. 3/6</button>
+        <button class="option" data-correct="false">C. 3/4</button>
+        <div id="quiz-result" aria-live="polite"></div>
+      </div>
+      <div class="notice"><strong>Important:</strong> This is an early demonstration website. It does not create accounts, collect student details or provide live AI tutoring. SmartStudy will need careful accuracy, privacy and safety testing before real students use it.</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div><strong>✦ SmartStudy</strong><br><small>Learn smarter. Achieve more.</small></div>
+    <small>Early prototype · Made to help learning feel clearer.</small>
+  </div>
+</footer>
+
+<script>
+  const askButton = document.getElementById('ask');
+  askButton.addEventListener('click', () => {
+    const q = document.getElementById('question').value.trim();
+    const box = document.getElementById('answer');
+    if (!q) {
+      box.textContent = 'Type a topic or question first, then try again.';
+    } else {
+      box.textContent = 'Let’s break "' + q + '" into smaller steps. First, tell yourself what you already know about this topic. Next, look for the key idea, then try one example. This is a sample response; live AI tutoring is not connected yet.';
+    }
+    box.classList.add('show');
+  });
+  document.querySelectorAll('.option').forEach(button => {
+    button.addEventListener('click', () => {
+      const result = document.getElementById('quiz-result');
+      result.textContent = button.dataset.correct === 'true'
+        ? 'Correct! 3/6 simplifies to 1/2. Great work!'
+        : 'Not quite. Try again: simplify each fraction or compare its value.';
+      result.style.color = button.dataset.correct === 'true' ? '#147d55' : '#9a5b13';
+    });
+  });
+</script>
+</body>
+</html>
