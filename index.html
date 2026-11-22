@@ -255,9 +255,24 @@
 }
 
 </style>
-
 <script>
-
 function askTutor() {
+  const question = document.getElementById("question").value;
+  const subject = document.getElementById("subject").value;
+
+  const answer = document.getElementById("answer");
+
+  if (!question.trim()) {
+    answer.innerText = "Please enter a question!";
+    return;
+  }
+
+  answer.innerText = "Thanks for asking about " + subject +
+    "! Your SmartStudy tutor is coming soon.";
+}
+</script>
+
+
+
 </body>
 </html>
